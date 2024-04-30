@@ -15,37 +15,50 @@ class MemoryLaneScreenState extends State<MemoryLaneScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Memory Lane'),
-      ),
-      body: ListView.builder(
-        itemCount: memories.length,
-        itemBuilder: (BuildContext context, int index) {
-          return MemoryListItem(
-            memory: memories[index],
-            onDelete: () {
-              setState(() {
-                memories.removeAt(index);
-              });
-            },
-          );
-        },
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => const AddMemoryScreen()),
-          ).then((newMemory) {
-            if (newMemory != null) {
-              setState(() {
-                memories.add(newMemory);
-              });
-            }
-          });
-        },
-        child: const Icon(Icons.add),
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBar(
+          centerTitle: true,
+          backgroundColor: Colors.deepPurple,
+          title: const Text(
+            'Memory Lane',
+            style: TextStyle(
+              color: Colors.white,
+            ),
+          ),
+        ),
+        body: ListView.builder(
+          itemCount: memories.length,
+          itemBuilder: (BuildContext context, int index) {
+            return MemoryListItem(
+              memory: memories[index],
+              onDelete: () {
+                setState(() {
+                  memories.removeAt(index);
+                });
+              },
+            );
+          },
+        ),
+        floatingActionButton: FloatingActionButton(
+          backgroundColor: Colors.deepPurple,
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const AddMemoryScreen()),
+            ).then((newMemory) {
+              if (newMemory != null) {
+                setState(() {
+                  memories.add(newMemory);
+                });
+              }
+            });
+          },
+          child: const Icon(
+            Icons.add,
+            color: Colors.white,
+          ),
+        ),
       ),
     );
   }
