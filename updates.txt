@@ -1,0 +1,7 @@
+** Ideas
+
+1. The UI, home screen could be like a winding path with a nice scenery around it, 
+then the memories could be like nodes or stops along the path
+2. The Splash screen could be an animation of a couple walking
+3. The font should be kinda cursive and relaxing and pretty
+4. 
