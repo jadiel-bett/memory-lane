@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:memory_lane/memory.dart';
+import 'dart:io';
 
 class AddMemoryScreen extends StatefulWidget {
   const AddMemoryScreen({super.key});
@@ -9,8 +11,22 @@ class AddMemoryScreen extends StatefulWidget {
 }
 
 class AddMemoryScreenState extends State<AddMemoryScreen> {
-  late String imageUrl;
-  late String description;
+  File? _selectedImage;
+  final TextEditingController _descriptionController = TextEditingController();
+
+  final ImagePicker _imagePicker = ImagePicker();
+
+  Future<void> _pickImage() async {
+    final pickedFile = await _imagePicker.pickImage(
+      source: ImageSource.gallery,
+    );
+
+    if (pickedFile != null) {
+      setState(() {
+        _selectedImage = File(pickedFile.path);
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -21,36 +37,60 @@ class AddMemoryScreenState extends State<AddMemoryScreen> {
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
+          // crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            TextField(
-              decoration: const InputDecoration(labelText: 'Image URL'),
-              onChanged: (value) {
-                imageUrl = value;
-              },
+            ElevatedButton(
+              onPressed: _pickImage,
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.deepPurple,
+              ),
+              child: const Text(
+                'Pick Image',
+                style: TextStyle(
+                  color: Colors.white,
+                ),
+              ),
             ),
+            const SizedBox(height: 16),
+            if (_selectedImage != null)
+              Image.file(
+                _selectedImage!,
+                height: 200,
+              ),
             const SizedBox(height: 16.0),
             TextField(
+              controller: _descriptionController,
               decoration: const InputDecoration(labelText: 'Description'),
-              onChanged: (value) {
-                description = value;
-              },
             ),
             const SizedBox(height: 16.0),
             ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.deepPurple,
+              ),
               onPressed: () {
-                if (imageUrl.isNotEmpty && description.isNotEmpty) {
+                if (_selectedImage != null &&
+                    _descriptionController.text.isNotEmpty) {
                   Navigator.pop(
                     context,
-                    Memory(imageUrl: imageUrl, description: description),
+                    Memory(
+                      image: _selectedImage,
+                      description: _descriptionController.text,
+                    ),
                   );
                 } else {
                   showDialog(
                     context: context,
                     builder: (BuildContext context) {
                       return AlertDialog(
-                        title: const Text('Error'),
-                        content: const Text('Please fill in all fields.'),
+                        title: const Text(
+                          'Error',
+                          style: TextStyle(
+                            color: Colors.red,
+                          ),
+                        ),
+                        content: const Text(
+                          'Please select an image and enter a description.',
+                        ),
                         actions: [
                           TextButton(
                             onPressed: () {
@@ -64,7 +104,12 @@ class AddMemoryScreenState extends State<AddMemoryScreen> {
                   );
                 }
               },
-              child: const Text('Add Memory'),
+              child: const Text(
+                'Add Memory',
+                style: TextStyle(
+                  color: Colors.white,
+                ),
+              ),
             ),
           ],
         ),

@@ -15,12 +15,13 @@ class MemoryDetailScreen extends StatelessWidget {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Expanded(
-            child: Image.network(
-              memory.imageUrl,
-              fit: BoxFit.cover,
+          if (memory.image != null)
+            Expanded(
+              child: Image.file(
+                memory.image!,
+                fit: BoxFit.cover,
+              ),
             ),
-          ),
           Padding(
             padding: const EdgeInsets.all(16.0),
             child: Text(

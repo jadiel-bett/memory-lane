@@ -11,22 +11,28 @@ class MemoryListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListTile(
-      leading: CircleAvatar(
-        backgroundImage: NetworkImage(memory.imageUrl),
-      ),
-      title: Text(memory.description),
-      onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => MemoryDetailScreen(memory: memory),
-          ),
-        );
-      },
-      trailing: IconButton(
-        icon: const Icon(Icons.delete),
-        onPressed: onDelete,
+    return Padding(
+      padding: const EdgeInsets.only(top: 16.0),
+      child: ListTile(
+        leading: CircleAvatar(
+          radius: 28,
+          backgroundImage: memory.image != null
+              ? FileImage(memory.image!)
+              : const AssetImage('assets/placeholder.png') as ImageProvider,
+        ),
+        title: Text(memory.description),
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => MemoryDetailScreen(memory: memory),
+            ),
+          );
+        },
+        trailing: IconButton(
+          icon: const Icon(Icons.delete),
+          onPressed: onDelete,
+        ),
       ),
     );
   }

@@ -1,6 +1,8 @@
+import 'dart:io';
+
 class Memory {
-  String imageUrl;
+  File? image;
   String description;
 
-  Memory({required this.imageUrl, required this.description});
+  Memory({required this.image, required this.description});
 }
