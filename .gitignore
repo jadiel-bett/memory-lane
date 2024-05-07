@@ -10,8 +10,8 @@
 .history
 .svn/
 migrate_working_dir/
-android/app/google-services.json
-firebase.json
+/android/app/google-services.json
+/firebase.json
 
 
 # IntelliJ related
