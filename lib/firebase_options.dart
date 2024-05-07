@@ -3,6 +3,7 @@
 import 'package:firebase_core/firebase_core.dart' show FirebaseOptions;
 import 'package:flutter/foundation.dart'
     show defaultTargetPlatform, kIsWeb, TargetPlatform;
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 /// Default [FirebaseOptions] for use with your Firebase apps.
 ///
@@ -46,30 +47,30 @@ class DefaultFirebaseOptions {
     }
   }
 
-  static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyCraCOkWkfkT09QyPLQcFCoAlBRCJTx-2c',
-    appId: '1:172098936453:web:9c8a1f6fdbf3d877c913ec',
+  static FirebaseOptions web = FirebaseOptions(
+    apiKey: dotenv.env['WEB_API_KEY']!,
+    appId: dotenv.env['WEB_APP_ID']!,
     messagingSenderId: '172098936453',
     projectId: 'memory-lane-e3455',
-    authDomain: 'memory-lane-e3455.firebaseapp.com',
-    storageBucket: 'memory-lane-e3455.appspot.com',
+    authDomain: dotenv.env['WEB_DOMAIN'],
+    storageBucket: dotenv.env['STORAGE_BUCKET'],
     measurementId: 'G-WSGSC4GX01',
   );
 
-  static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyDvWHGRHjN05j0iW1ErgUaTWurMWZh9juI',
-    appId: '1:172098936453:android:42c66015346e4139c913ec',
+  static FirebaseOptions android = FirebaseOptions(
+    apiKey: dotenv.env['ANDROID_API_KEY']!,
+    appId: dotenv.env['ANDROID_APP_ID']!,
     messagingSenderId: '172098936453',
     projectId: 'memory-lane-e3455',
-    storageBucket: 'memory-lane-e3455.appspot.com',
+    storageBucket: dotenv.env['STORAGE_BUCKET'],
   );
 
-  static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyAiuljPDEq3qaAz6zjScpm40Jv2J2olUks',
-    appId: '1:172098936453:ios:5d355c79d46218b3c913ec',
+  static FirebaseOptions ios = FirebaseOptions(
+    apiKey: dotenv.env['IOS_API_KEY']!,
+    appId: dotenv.env['IOS_APP_ID']!,
     messagingSenderId: '172098936453',
     projectId: 'memory-lane-e3455',
-    storageBucket: 'memory-lane-e3455.appspot.com',
+    storageBucket: dotenv.env['STORAGE_BUCKET'],
     iosBundleId: 'com.example.memoryLane',
   );
 }
